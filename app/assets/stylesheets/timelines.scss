@@ -27,6 +27,10 @@
       &.mine {
         background-color: #C1EFFF;
       }
+      
+      &.reply {
+        margin-top: 0px;
+      }
 
       p {
         margin: 0;
@@ -50,12 +54,12 @@
     }
   }
 
-/* ***************** 下記を追加 ************** */
+
   .user_filter {
     margin-bottom: 20px;
     .actions {
       text-align: right;
     }
   }
-/* ******************************************** */
+
 }

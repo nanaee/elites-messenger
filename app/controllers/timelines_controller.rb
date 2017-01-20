@@ -1,8 +1,13 @@
 class TimelinesController < ApplicationController
   def index
     @input_message = params[:id] ? Timeline.find(params[:id]) : Timeline.new
-    @timeline = Timeline.includes(:user).user_filter(params[:filter_user_id]).order('updated_at DESC')
+    @timeline = Timeline.includes(:user).not_reply.user_filter(params[:filter_user_id]).order('updated_at DESC')
     @users = User.all
+    
+    if params[:reply_id]
+      # 返信時は返信のタイムライン情報を取得
+      @reply_timeline = Timeline.find(params[:reply_id])
+    end
   end
   
   def create
@@ -39,6 +44,6 @@ class TimelinesController < ApplicationController
 
   private
   def input_message_param
-    params.require(:timeline).permit(:message)
+    params.require(:timeline).permit(:message, :reply_id)
   end
 end
