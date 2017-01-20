@@ -6,19 +6,17 @@
   &.wrapper {
     width: 700px;
   }
-  
   .actions {
     div {
       &.alert {
         float: left;
       }
-      
       &.post {
         float: right;
       }
     }
   }
-  
+
   .timeline {
     .per {
       border-radius: 5px;
@@ -51,5 +49,13 @@
       }
     }
   }
-  
+
+/* ***************** 下記を追加 ************** */
+  .user_filter {
+    margin-bottom: 20px;
+    .actions {
+      text-align: right;
+    }
+  }
+/* ******************************************** */
 }
