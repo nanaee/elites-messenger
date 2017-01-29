@@ -13,23 +13,31 @@
     <% end %>
   </p>
   <%= simple_format t.message, class: 'message' %>
-  <% if mypost?(t) %>
   
-  <div class="operation">
-    <!-- 自分の投稿の場合、編集ボタンを表示 -->
-    <%= link_to root_path(id: t.id, message: t.message) do %>
-      <%= button_tag 'Edit', class: 'btn btn-info' %>
+    <% if mypost?(t) %>
+      <div class="operation">
+        <!-- 自分の投稿の場合、編集ボタンを表示 -->
+        <%= link_to root_path(id: t.id, message: t.message) do %>
+          <%= button_tag 'Edit', class: 'btn btn-info' %>
+        <% end %>
+        <%= button_to 'Del', timeline_path(t), method: :delete, class: 'btn btn-danger', data: {confirm: '削除してよろしいですか？'}  %>
+      </div>
+    <% else %>
+      <div class="operation">
+        <!-- 他人の投稿の場合、Reボタンを表示 -->
+        <%= link_to root_path(reply_id: t.id) do %>
+          <%= button_tag 'Re', class: 'btn btn-info' %>
+        <% end %>
+        
+        <%= button_to 'like', timeline_likes_path(t.id), method: :post, class: 'btn-danger' if t.likes.where(user_id: current_user.id).count == 0 %>
+      </div>
+      
     <% end %>
     
-    <%= button_to 'Del', timeline_path(t), method: :delete, class: 'btn btn-danger', data: {confirm: '削除してよろしいですか？'}  %>
-    </div>
-    
-  <% else %>
-    <!-- 他人の投稿の場合、Reボタンを表示 -->
-    <%= link_to root_path(reply_id: t.id) do %>
-      <%= button_tag 'Re', class: 'btn btn-info' %>
+    <% if t.likes.count > 0 %>
+      いいね<%= t.likes.count %>件しました!
     <% end %>
-  <% end %>
+
 </div>
 <% t.replies.each do |r| %>
   <%= render 'timelines/timeline', t: r, is_reply: true %>

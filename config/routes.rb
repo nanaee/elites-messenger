@@ -7,7 +7,11 @@ Rails.application.routes.draw do
     collection do
       post 'filter_by_user'
     end
+    
+    resources :likes, only: [:create]
   end
+  
+
   
   if Rails.env.development?
     mount LetterOpenerWeb::Engine, at: "/letter_opener"
